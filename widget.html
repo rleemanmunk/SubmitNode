@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Widget test</title>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.2/dijit/themes/claro/claro.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.2/dojo/dojo.js"></script>
+		<script>
+require([
+	"dojo/dom-construct",
+	"widgets/CodeMirror.js",
+	"dojo/domReady!"
+], function(domConstruct, CodeMirror) {
+	var cm = new CodeMirror();
+	console.log(cm.buildRendering);
+	domConstruct.place(cm, dojo.body());
+});
+		</script>
+	</head>
+	<body class="claro">
+	</body>
+</html>
