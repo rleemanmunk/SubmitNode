@@ -9,6 +9,7 @@ require([
 //Does not have functionality, just asks to wait until the dom is ready before starting the code
 
 ], function(domConstruct, Calendar, date) {
+domConstruct.create("div", {innerHTML:"<h1>Calendar<h1>"}, dojo.body());
 var div = domConstruct.create("div", null, dojo.body());
 var myCalendar = new Calendar({
 		value: new Date()
