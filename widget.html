@@ -2,17 +2,17 @@
 <html>
 	<head>
 		<title>Widget test</title>
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.2/dijit/themes/claro/claro.css" />
-		<script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.2/dojo/dojo.js"></script>
+		<link rel="stylesheet" href="dijit/themes/claro/claro.css" />
+		<script src="dojo/dojo.js"></script>
 		<script>
 require([
 	"dojo/dom-construct",
-	"widgets/CodeMirror.js",
+	"widgets/CMWidget.js",
 	"dojo/domReady!"
-], function(domConstruct, CodeMirror) {
-	var cm = new CodeMirror();
-	console.log(cm.buildRendering);
-	domConstruct.place(cm, dojo.body());
+], function(domConstruct, CMWidget) {
+	var d = domConstruct.create("div", null, dojo.body())
+	var cm = new CMWidget({},d);
+	cm.startup();
 });
 		</script>
 	</head>
