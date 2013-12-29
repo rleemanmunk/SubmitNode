@@ -1,11 +1,22 @@
 require([
+<<<<<<< HEAD
     "dojo/dom-construct",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
     "widgets/CMWidget",
+	"dijit/form/Button",
     "dojo/domReady!"
-], function(domConstruct, TabContainer, ContentPane, CMWidget){
-    var tc = new TabContainer({
+], function(domConstruct, TabContainer, ContentPane, CMWidget, Button){
+	var runButton = new Button({
+        label: "RUN!",
+        onClick: function(){
+            // Do something:
+        }
+	});
+
+
+
+	var tc = new TabContainer({
         style: "height: 100%; width: 100%;",
 		tabPosition: "left-h"
     }, "tc1-prog");
@@ -15,6 +26,8 @@ require([
          content: "We offer amazing food",
          style: "width: 100%"
     });
+	cp1.addChild(textarea);
+	cp1.addChild(runButton);
     tc.addChild(cp1);
 
     var cp2 = new ContentPane({
