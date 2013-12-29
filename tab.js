@@ -19,8 +19,7 @@ require([
 
     var cp1 = new ContentPane({
          title: "Run",
-         content: "We offer amazing food",
-         style: "width: 100%"
+         content: "We offer amazing food"
     });
 	cp1.addChild(runButton);
     tc.addChild(cp1);
