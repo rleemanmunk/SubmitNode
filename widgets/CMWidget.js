@@ -15,8 +15,7 @@ define([
 		postCreate: function() {
 			this.inherited(arguments);
 			this.cm = CodeMirror(this.domNode,{
-				lineNumbers:true,
-				value:" "
+				lineNumbers:true
 			});
 		},
 		resize: function() {

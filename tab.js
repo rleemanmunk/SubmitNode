@@ -1,5 +1,4 @@
 require([
-<<<<<<< HEAD
     "dojo/dom-construct",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
@@ -13,9 +12,6 @@ require([
             // Do something:
         }
 	});
-
-
-
 	var tc = new TabContainer({
         style: "height: 100%; width: 100%;",
 		tabPosition: "left-h"
@@ -26,7 +22,6 @@ require([
          content: "We offer amazing food",
          style: "width: 100%"
     });
-	cp1.addChild(textarea);
 	cp1.addChild(runButton);
     tc.addChild(cp1);
 
