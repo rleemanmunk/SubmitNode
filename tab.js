@@ -12,6 +12,7 @@ require([
             // Do something:
         }
 	});
+	var cm = new CMWidget({});
 	var tc = new TabContainer({
         style: "height: 100%; width: 100%;",
 		tabPosition: "left-h"
@@ -21,6 +22,7 @@ require([
          title: "Run",
          content: "We offer amazing food"
     });
+	cp1.addChild(cm);
 	cp1.addChild(runButton);
     tc.addChild(cp1);
 
@@ -29,9 +31,6 @@ require([
          content: "We are known for our drinks."
     });
     tc.addChild(cp2);
-
-    var cm = new CMWidget({});
-    cp1.addChild(cm);
 
     tc.startup();
 });
