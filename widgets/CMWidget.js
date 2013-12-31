@@ -4,7 +4,7 @@ define([
 	"dojo/dom-construct",
 	"dijit/_WidgetBase",
 	"dojo/text!widgets/cmwidget/codemirror.css",
-	"dojo/text!widgets/cmwidget/3024-day.css",
+	"dojo/text!widgets/cmwidget/mbo.css",
 	"widgets/cmwidget/codemirror-compressed"
 ], function(declare, query, domConstruct, _WidgetBase, css, theme) {
 	domConstruct.create("style", {innerHTML:css}, query("head")[0]);
@@ -18,7 +18,7 @@ define([
 			this.inherited(arguments);
 			this.cm = CodeMirror(this.domNode,{
 				lineNumbers:true,
-				theme: "3024-day"
+				theme: "mbo"
 			});
 		},
 		resize: function() {
