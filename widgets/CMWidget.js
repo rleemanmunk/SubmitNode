@@ -24,6 +24,9 @@ define([
 		resize: function() {
 			this.inherited(arguments);
 			this.cm.refresh();
+		},
+		getContent: function() {
+			return this.cm.getValue();
 		}
 	});
 });
