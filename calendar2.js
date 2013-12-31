@@ -3,14 +3,15 @@ require([
 	"dijit/Calendar",
 	"dojo/date",
 	"dijit/ColorPalette",
+	"dojo/dom-style",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
     "dojo/domReady!"
-], function(domConstruct, Calendar, date, ColorPalette, TabContainer, ContentPane){
+], function(domConstruct, Calendar, date, ColorPalette, domStyle, TabContainer, ContentPane){
 	var title = domConstruct.create("h1", {innerHTML:"Calendar"}, dojo.body());
 	var div = domConstruct.create("div", null, dojo.body());
 	//var color = red;
-	//var cname = domConstruct.create("p", {innerHTML:"color name"}, dojo.body());
+	
 	var myCalendar = new Calendar({
 		value: new Date(),
 		style: "margin-left: auto; margin-right: auto;"
@@ -20,8 +21,8 @@ require([
 		style: "margin-left: auto; margin-right: auto;",
         onChange: function(val){ 
 			//$color = val;
-			console.log(val);
-			
+			cname.set("content", val);
+			domStyle.set(dojo.body(), "background-color", val);
 		}
     });
 	var tc = new TabContainer({
@@ -44,6 +45,12 @@ require([
 	cp2.addChild(myPalette);
 	//cp2.addChild(cname);
     tc.addChild(cp2);
-
+	
+	var cname = new ContentPane({
+		content: "red"
+	});
+	//var cname = domConstruct.create("p", {innerHTML:"color name"});
+	cp2.addChild(cname);
+	
     tc.startup();
 });

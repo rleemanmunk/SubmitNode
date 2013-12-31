@@ -25,6 +25,7 @@ define([
 			this.inherited(arguments);
 			this.cm.refresh();
 		},
+		//returns content of codemirror
 		getContent: function() {
 			return this.cm.getValue();
 		}
