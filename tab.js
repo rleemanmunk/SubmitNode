@@ -9,7 +9,7 @@ require([
 	var runButton = new Button({
         label: "RUN!",
         onClick: function(){
-            alert(cm.getContent());
+            eval(cm.getContent());
         }
 	});
 	var cm = new CMWidget({});
