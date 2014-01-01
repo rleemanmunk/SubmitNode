@@ -7,9 +7,15 @@ require([
     "dojo/domReady!"
 ], function(domConstruct, TabContainer, ContentPane, CMWidget, Button){
 	var runButton = new Button({
-        label: "RUN!",
+        label: "Run",
         onClick: function(){
 			eval(cm.getContent());
+        }
+	});
+	var submitButton = new Button({
+        label: "Submit",
+        onClick: function(){
+			//eval(cm.getContent());
         }
 	});
 	var cm = new CMWidget({});
@@ -20,7 +26,8 @@ require([
 
     var cp1 = new ContentPane({
          title: "Run",
-         content: "We offer amazing food"
+         content: "Enter your code here and click run to test",
+		 style: "padding: 20px;"
     });
 	cp1.addChild(cm);
 	cp1.addChild(runButton);
@@ -28,9 +35,21 @@ require([
 
     var cp2 = new ContentPane({
          title: "Submit",
-         content: "We are known for our drinks."
+         content: null,
+		 style: "padding: 20px;"
     });
     tc.addChild(cp2);
-
+	
+	var upload = domConstruct.create("div", {innerHTML:
+		"<input type=\"file\">"
+	});
+	
+	var uppane = new ContentPane({
+         title: null,
+		 content: upload
+    });
+	cp2.addChild(uppane);
+	cp2.addChild(submitButton);
+	
     tc.startup();
 });
