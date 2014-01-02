@@ -24,6 +24,9 @@ var server = http.createServer(function (req,res) {
 		case "run":
 			break;
 		default:
+			if (path == "./") {
+				path = "./index.html";
+			}
 			fs.exists(path, function (exists) {
 				if (!exists) {
 					res.writeHead(404);
