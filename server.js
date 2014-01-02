@@ -1,33 +1,52 @@
-// load connect and path modules
-var connect = require('connect');
-var path = require('path');
+var http = require("http");
+var url = require("url");
+var fs = require("fs");
 
-// sets the path to the server's files
-// by default to current directory (".")
-// or to what you specify as 3rd argument
-// node server.js /path/to/other/file
-var servePath = path.resolve(".");
-if (process.argv[2]) {
-	servePath = path.resolve(process.argv[2]);
-}
-
-// default port, change to whatever you want
-// 80 is typical webserver
-// above 1000 is free use
 var port = 3131;
 
-// prints out information about the server
-console.log(servePath);
-console.log("Listening on port: " + port);
+function getType(filename) {
+	if (filename.indexOf(".js") > -1) {
+		return "text/javascript";
+	} else if (filename.indexOf(".html") > -1) {
+		return "text/html";
+	} else if (filename.indexOf(".css") > -1) {
+		return "text/css";
+	} else {
+		return "text/plain";
+	}
+}
 
+var server = http.createServer(function (req,res) {
+	var path = "." + url.parse(req.url).pathname;
+	var cmd = path.split("/");
 
-// creates the server
-var server = connect.createServer(
-	// use a logger
-	connect.logger(),
-	// use the directory specified by servePath
-	connect.static(servePath)
-);
+	switch (cmd[1]) {
+		case "run":
+			break;
+		default:
+			fs.exists(path, function (exists) {
+				if (!exists) {
+					res.writeHead(404);
+					res.write("404 Not Found");
+					res.end();
+					return;
+				}
+				fs.readFile(path, "binary", function (err, data) {
+					if (err) {
+						res.writeHead(400);
+						res.write("There was an error on the server");
+						res.end();
+						return;
+					}
+					res.writeHead(200, {"Content-Type":getType(path)});
+					res.write(data, "binary");
+					res.end();
+					return;
+				});
+				return;
+			});
+	}
+	return;
+});
 
-// starts the server by telling it to listen on the specified port
 server.listen(port);
