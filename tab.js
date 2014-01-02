@@ -1,16 +1,32 @@
 require([
     "dojo/dom-construct",
+	"dijit/layout/BorderContainer",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
     "widgets/CMWidget",
 	"dijit/form/Button",
     "dojo/domReady!"
-], function(domConstruct, TabContainer, ContentPane, CMWidget, Button){
+], function(domConstruct, BorderContainer, TabContainer, ContentPane, CMWidget, Button){
+	var content = new BorderContainer({
+		style: {
+			height: "100%", 
+			width: "90%",
+			minWidth: "400px",
+			marginLeft: "auto",
+			marginRight: "auto"
+		}
+	}, "tc1-prog");
+	var title = new ContentPane({
+		region: "top",
+		content: "<h2>COMP 110</h2>",
+		style: "background-color: #686868; border: 0px; margin-bottom: 25px; margin-top: 15px; color: white; line-height: 50%; padding-top: 0px; padding-bottom: 0px;"
+	});
+	
+	content.addChild(title);
+	
 	var tc = new TabContainer({
-        style: "height: 100%; width: 100%;",
-		tabPosition: "top"
-    }, "tc1-prog");
-
+		region: "center"
+    });
 	//=====================================
 	//==============TEST PANE==============
 	//=====================================
@@ -66,5 +82,8 @@ require([
 	});
 	submitPane.addChild(submitButton);
 	
-    tc.startup();
+	content.addChild(tc);
+	
+    content.startup();
+	
 });
