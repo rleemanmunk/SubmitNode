@@ -11,7 +11,7 @@ tabs on the top
 
 
 confirm on assignment submission "submit completed assignment (Make sure you test it first!)"
-alert to say "complete submission coding"
+alert to say "TODO: submit ajax request"
 
 
 

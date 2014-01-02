@@ -6,50 +6,65 @@ require([
 	"dijit/form/Button",
     "dojo/domReady!"
 ], function(domConstruct, TabContainer, ContentPane, CMWidget, Button){
+	var tc = new TabContainer({
+        style: "height: 100%; width: 100%;",
+		tabPosition: "top"
+    }, "tc1-prog");
+
+	//=====================================
+	//==============TEST PANE==============
+	//=====================================
+    var testPane = new ContentPane({
+         title: "Test",
+		 style: "padding: 20px;"
+    });
+	var editorTitle = new ContentPane({
+		content: "Code:",
+		style: {
+			fontFamily: "sans-serif",
+			fontWeight: "bold",
+			fontSize: "30px"
+		}
+	});
+	testPane.addChild(editorTitle);
+	var cm = new CMWidget({
+		style: {border: "1px solid red"}
+	});
+	testPane.addChild(cm);
 	var runButton = new Button({
         label: "Run",
-        onClick: function(){
+        onClick: function() {
 			eval(cm.getContent());
         }
 	});
-	var submitButton = new Button({
-        label: "Submit",
-        onClick: function(){
-			//eval(cm.getContent());
-        }
-	});
-	var cm = new CMWidget({});
-	var tc = new TabContainer({
-        style: "height: 100%; width: 100%;",
-		tabPosition: "left-h"
-    }, "tc1-prog");
+	testPane.addChild(runButton);
+    tc.addChild(testPane);
 
-    var cp1 = new ContentPane({
-         title: "Run",
-         content: "Enter your code here and click run to test",
-		 style: "padding: 20px;"
-    });
-	cp1.addChild(cm);
-	cp1.addChild(runButton);
-    tc.addChild(cp1);
-
-    var cp2 = new ContentPane({
+	//=====================================
+	//============SUBMIT PANE==============
+	//=====================================
+    var submitPane = new ContentPane({
          title: "Submit",
-         content: null,
 		 style: "padding: 20px;"
     });
-    tc.addChild(cp2);
+    tc.addChild(submitPane);
 	
 	var upload = domConstruct.create("div", {innerHTML:
 		"<input type=\"file\">"
 	});
-	
 	var uppane = new ContentPane({
          title: null,
 		 content: upload
     });
-	cp2.addChild(uppane);
-	cp2.addChild(submitButton);
+	submitPane.addChild(uppane);
+	
+	var submitButton = new Button({
+        label: "Submit",
+        onClick: function() {
+			alert("TODO: submission function");
+        }
+	});
+	submitPane.addChild(submitButton);
 	
     tc.startup();
 });
