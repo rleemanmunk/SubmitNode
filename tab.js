@@ -25,7 +25,9 @@ require([
 	content.addChild(title);
 	
 	var tc = new TabContainer({
-		region: "center"
+		region: "center",
+		useMenu: false,
+		useSlider: false
     });
 	//=====================================
 	//==============TEST PANE==============
