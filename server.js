@@ -18,10 +18,27 @@ function getType(filename) {
 
 var server = http.createServer(function (req,res) {
 	var path = "." + url.parse(req.url).pathname;
+	var full = url.parse(req.url).path;
 	var cmd = path.split("/");
 
 	switch (cmd[1]) {
-		case "run":
+		case "test":
+			break;
+		case "submit":
+			break;
+		case "save":
+			break;
+		case "load":
+			break;
+		case "rest":
+			console.log(full);
+			res.writeHead(200, {"Content-Type":"application/json"});
+			if (cmd[2]) {
+				res.write('{"name":"test","id":"root","children":[{"name":"test2","id":"leaf"}]}');
+			} else {
+				res.write('[{"name":"test","id":"root","children":true}]');
+			}
+			res.end();
 			break;
 		default:
 			if (path == "./") {

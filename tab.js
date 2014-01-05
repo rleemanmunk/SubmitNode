@@ -5,8 +5,12 @@ require([
     "dijit/layout/ContentPane",
     "widgets/CMWidget",
 	"dijit/form/Button",
+	"dojo/store/JsonRest",
+	"dijit/tree/ObjectStoreModel",
+	"dijit/Tree",
     "dojo/domReady!"
-], function(domConstruct, BorderContainer, TabContainer, ContentPane, CMWidget, Button){
+], function(domConstruct, BorderContainer, TabContainer, ContentPane, CMWidget, Button, 
+	JsonRest, ObjectStoreModel, Tree){
 	var content = new BorderContainer({
 		style: {
 			height: "100%", 
@@ -34,28 +38,71 @@ require([
 	//=====================================
     var testPane = new ContentPane({
          title: "Test",
-		 style: "padding: 20px;"
+		// TODO move to center container
+		 style: "padding: 20px;",
     });
+	var testPaneOrganizer = new BorderContainer({
+		design: "sidebar"
+	});
 	var editorTitle = new ContentPane({
 		content: "Code:",
 		style: {
 			fontFamily: "sans-serif",
 			fontWeight: "bold",
 			fontSize: "30px"
+		},
+		region: "top"
+	});
+	testPaneOrganizer.addChild(editorTitle);
+	var filePane = new ContentPane({
+		style: {
+			width: "200px"
+		},
+		region: "left"
+	});
+	var fileManager = new Tree({
+		model: new ObjectStoreModel({
+			store: new JsonRest({
+				target: "/rest/",
+				getChildren: function(object) {
+					return object.children || null;
+				}
+			}),
+		   getRoot: function(onItem, onError) {
+			   this.store.get("root").then(onItem,onError);
+		   },
+		   mayHaveChildren: function(object) {
+			   return "children" in object;
+		   }
+		})
+	});
+	filePane.addChild(fileManager);
+	testPaneOrganizer.addChild(filePane);
+	// ------ CM ------
+	var cmContainer = new ContentPane({
+		region:"center"
+	});
+	var cm = new CMWidget({
+		style: {
+			border: "1px solid red",
+			height: "100%"
 		}
 	});
-	testPane.addChild(editorTitle);
-	var cm = new CMWidget({
-		style: {border: "1px solid red"}
+	cmContainer.addChild(cm);
+	testPaneOrganizer.addChild(cmContainer);
+	// ------ CM ------
+	var testPaneControls = new ContentPane({
+		region: "bottom"
 	});
-	testPane.addChild(cm);
 	var runButton = new Button({
         label: "Run",
         onClick: function() {
 			eval(cm.getContent());
         }
 	});
-	testPane.addChild(runButton);
+	testPaneControls.addChild(runButton);
+	testPaneOrganizer.addChild(testPaneControls);
+	testPane.addChild(testPaneOrganizer);
     tc.addChild(testPane);
 
 	//=====================================
@@ -84,7 +131,9 @@ require([
 	});
 	submitPane.addChild(submitButton);
 	
+	console.log("adding tc");
 	content.addChild(tc);
+	console.log("tc added");
 	
     content.startup();
 	

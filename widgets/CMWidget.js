@@ -9,6 +9,7 @@ define([
 ], function(declare, query, domConstruct, _WidgetBase, css, theme) {
 	domConstruct.create("style", {innerHTML:css}, query("head")[0]);
 	domConstruct.create("style", {innerHTML:theme}, query("head")[0]);
+	domConstruct.create("style", {innerHTML:".CodeMirror {height: 100%;}"}, query("head")[0]);
 	return declare([_WidgetBase], {
 		cm: null,
 		buildRendering: function() {
