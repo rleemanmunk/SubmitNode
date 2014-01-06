@@ -1,20 +1,13 @@
-Run -> test
 
-Type your code here
-Code editor:
-Code:
-(heading style)
+Folders:
+username (saved files)
+templates (shared from teacher) (maybe "assignments")
+submitted files
 
+Tabs:
+inclass
+homework
+folder management
+full assignment description
+html display
 
-
-tabs on the top
-
-
-confirm on assignment submission "submit completed assignment (Make sure you test it first!)"
-alert to say "TODO: submit ajax request"
-
-
-
-gray/chrome in the background
-
-border around the editor
