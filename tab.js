@@ -45,11 +45,11 @@ require([
 		design: "sidebar"
 	});
 	var editorTitle = new ContentPane({
-		content: "Code:",
+		content: "Code",
 		style: {
 			fontFamily: "sans-serif",
 			fontWeight: "bold",
-			fontSize: "30px"
+			fontSize: "20px"
 		},
 		region: "top"
 	});
