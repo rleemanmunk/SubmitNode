@@ -3,13 +3,14 @@ require([
 	"dijit/layout/BorderContainer",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
+	"widgets/Login",
     "widgets/CMWidget",
 	"dijit/form/Button",
 	"dojo/store/JsonRest",
 	"dijit/tree/ObjectStoreModel",
 	"dijit/Tree",
     "dojo/domReady!"
-], function(domConstruct, BorderContainer, TabContainer, ContentPane, CMWidget, Button, 
+], function(domConstruct, BorderContainer, TabContainer, ContentPane, Login, CMWidget, Button, 
 	JsonRest, ObjectStoreModel, Tree){
 	var content = new BorderContainer({
 		style: {
@@ -24,6 +25,11 @@ require([
 		region: "top",
 		content: "<h2>COMP 110</h2>",
 		style: "background-color: #686868; border: 0px; margin-bottom: 25px; margin-top: 15px; color: white; line-height: 50%; padding-top: 0px; padding-bottom: 0px;"
+	});
+	var login = new Login({
+		style: {
+			"float": "right"
+		}
 	});
 	
 	content.addChild(title);
