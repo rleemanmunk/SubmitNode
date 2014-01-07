@@ -22,9 +22,9 @@ var server = http.createServer(function (req,res) {
 	var cmd = path.split("/");
 
 	switch (cmd[1]) {
-		case "test":
+		case "icsubmit":
 			break;
-		case "submit":
+		case "hwsubmit":
 			break;
 		case "save":
 			break;

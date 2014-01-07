@@ -2,6 +2,7 @@ require([
     "dojo/dom-construct",
 	"dijit/layout/BorderContainer",
     "dijit/layout/TabContainer",
+	"dijit/layout/AccordionContainer",
     "dijit/layout/ContentPane",
     "widgets/CMWidget",
 	"dijit/form/Button",
@@ -9,7 +10,9 @@ require([
 	"dijit/tree/ObjectStoreModel",
 	"dijit/Tree",
     "dojo/domReady!"
-], function(domConstruct, BorderContainer, TabContainer, ContentPane, CMWidget, Button, 
+], function(domConstruct,
+	BorderContainer, TabContainer, AccordionContainer, ContentPane,
+	CMWidget, Button, 
 	JsonRest, ObjectStoreModel, Tree){
 	var content = new BorderContainer({
 		style: {
@@ -20,6 +23,9 @@ require([
 			marginRight: "auto"
 		}
 	}, "tc1-prog");
+	//=====================================
+	//================TITLE================
+	//=====================================
 	var title = new ContentPane({
 		region: "top",
 		content: "<h2>COMP 110</h2>",
@@ -45,20 +51,28 @@ require([
 		design: "sidebar"
 	});
 	var editorTitle = new ContentPane({
-		content: "Code:",
+		content: "Code",
 		style: {
 			fontFamily: "sans-serif",
 			fontWeight: "bold",
-			fontSize: "30px"
+			fontSize: "20px"
 		},
 		region: "top"
 	});
 	testPaneOrganizer.addChild(editorTitle);
-	var filePane = new ContentPane({
+	var testLeftPane = new AccordionContainer({
 		style: {
 			width: "200px"
 		},
 		region: "left"
+	});
+	var assignmentPane = new ContentPane({
+		title: "Assignments",
+		content: "stuff"
+	});
+	testLeftPane.addChild(assignmentPane);
+	var filePane = new ContentPane({
+		title: "Your Files"
 	});
 	var fileManager = new Tree({
 		model: new ObjectStoreModel({
@@ -77,7 +91,8 @@ require([
 		})
 	});
 	filePane.addChild(fileManager);
-	testPaneOrganizer.addChild(filePane);
+	testLeftPane.addChild(filePane);
+	testPaneOrganizer.addChild(testLeftPane);
 	// ------ CM ------
 	var cmContainer = new ContentPane({
 		region:"center"
@@ -97,10 +112,21 @@ require([
 	var runButton = new Button({
         label: "Run",
         onClick: function() {
-			eval(cm.getContent());
+			try {
+				eval(cm.getContent());
+			} catch (e) {
+				alert("Error: " + e);
+			}
         }
 	});
 	testPaneControls.addChild(runButton);
+	var submitButton = new Button({
+		label: "Submit",
+		onClick: function() {
+			alert("TODO: submit to server");
+		}
+	});
+	testPaneControls.addChild(submitButton);
 	testPaneOrganizer.addChild(testPaneControls);
 	testPane.addChild(testPaneOrganizer);
     tc.addChild(testPane);
@@ -131,9 +157,7 @@ require([
 	});
 	submitPane.addChild(submitButton);
 	
-	console.log("adding tc");
 	content.addChild(tc);
-	console.log("tc added");
 	
     content.startup();
 	
