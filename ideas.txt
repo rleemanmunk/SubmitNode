@@ -12,3 +12,10 @@ folder management
 full assignment description
 html display
 
+
+Tasks:
+Login
+Run and submit
+- status area to show errors
+grading tab
+- push through grader, show grade
