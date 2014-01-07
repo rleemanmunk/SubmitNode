@@ -70,6 +70,22 @@ require([
 		title: "Assignments",
 		content: "stuff"
 	});
+	var assignmentTree = new Tree({
+		model: new ObjectStoreModel({
+			store: new JsonRest({
+				target: "/assignments/",
+				getChildren: function (object) {
+					return object.children || null;
+				}
+			}),
+			getRoot: function (onItem, onError) {
+				this.store.get("root").then(onItem,onError);
+			},
+			mayHaveChildren: function (object) {
+				return "children" in object;
+			}
+		})
+	});
 	testLeftPane.addChild(assignmentPane);
 	var filePane = new ContentPane({
 		title: "Your Files"
