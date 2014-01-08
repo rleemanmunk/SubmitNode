@@ -28,23 +28,23 @@ define([
 					fontSize: "20px"
 				}
 			}, this.domNode);
-		},
-		postCreate: function () {
-			var topStyle = domStyle.get(this.domNode);
-			var titleStyle = domStyle.get(this.titleNode);
+		},postCreate: function () {
+			 var topStyle = domStyle.get(this.domNode);
+			 var titleStyle = domStyle.get(this.titleNode);
 
-			var tsWidth = Number(topStyle.width.split("px")[0]);
-			domStyle.set(this.titleNode, "width", tsWidth * .5);
+			 var tsWidth = Number(topStyle.width.split("px")[0]);
+			 domStyle.set(this.titleNode, "width", tsWidth * .5);
 
 			domStyle.set(this.containerNode, "height", titleStyle.height);
-		},
-		addChild: function () {
-			this.inherited(arguments);
-			var cstyle = domStyle.get(this.getChildren()[0].domNode);
-			var tstyle = domStyle.get(this.domNode);
-			domStyle.set(this.containerNode, "height", cstyle.height);
-			domStyle.set(this.containerNode, "margin-top", "auto");
-			domStyle.set(this.containerNode, "margin-bottom", "auto");
-		}
+		 }
+		// 
+		// addChild: function () {
+			// this.inherited(arguments);
+			// var cstyle = domStyle.get(this.getChildren()[0].domNode);
+			// var tstyle = domStyle.get(this.domNode);
+			// domStyle.set(this.containerNode, "height", cstyle.height);
+			// domStyle.set(this.containerNode, "margin-top", "auto");
+			// domStyle.set(this.containerNode, "margin-bottom", "auto");
+		// }
 	});
 });
