@@ -21,54 +21,19 @@ require([
 			marginRight: "auto"
 		}
 	}, "tc1-prog");
-	var titlePane = new ContentPane({
+	var title = new ContentPane({
 		region: "top",
+		content: "COMP 110",
 		style: {
 			backgroundColor: "#686868",
 			border: "0px",
-			marginBottom: "25px",
-			marginTop: "15px",
 			color: "white",
-			height: "60px"
+			marginBottom: "10px",
+			marginTop: "5px",
+			font: "sans-serif"
 		}
 	});
-	
-	var titleSplit = new BorderContainer({
-		style: {
-			backgroundColor: "inherit",
-			border: "inherit"
-		}
-	});
-	
-	var titleText = new ContentPane({
-		region: "center",
-		content: "COMP 110",
-		style: {
-			backgroundColor: "inherit",
-			border: "inherit",
-			marginTop: "auto",
-			marginBottom: "auto",
-			fontFamily: "sans-serif",
-			fontWeight: "bold",
-			fontSize: "25px"
-		}
-	});
-	var loginPane = new ContentPane({
-		region: "right",
-		style: {
-			backgroundColor: "inherit",
-			border: "inherit"
-		}
-	});
-	var login = new Login({
-
-	});
-	
-	titleSplit.addChild(titleText);
-	loginPane.addChild(login);
-	titleSplit.addChild(loginPane);
-	titlePane.addChild(titleSplit);
-	content.addChild(titlePane);
+	content.addChild(title);
 	
 	var tc = new TabContainer({
 		region: "center",
