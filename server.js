@@ -53,6 +53,7 @@ var server = http.createServer(function (req,res) {
 	}
 	var path = "." + url.parse(req.url).pathname;
 	var full = url.parse(req.url).path;
+	var authPass = full.indexOf("?pass") > -1;
 	var cmd = path.split("/");
 
 	switch (cmd[1]) {
@@ -150,7 +151,11 @@ var server = http.createServer(function (req,res) {
 						res.end();
 						return;
 					}
-					res.writeHead(200, {"Content-Type":getType(path)});
+					//res.writeHead(200, {"Content-Type":getType(path)});
+					res.setHeader("Content-Type","text/html");
+					if (authPass) {
+						res.setHeader("Set-Cookie",cookieData);
+					}
 					res.write(data, "binary");
 					res.end();
 					return;
