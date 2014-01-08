@@ -23,29 +23,51 @@ require([
 	}, "tc1-prog");
 	var titlePane = new ContentPane({
 		region: "top",
-		content: "<h2>COMP 110</h2>",
-		style: "background-color: #686868; border: 0px; margin-bottom: 25px; margin-top: 15px; color: white; line-height: 50%; padding-top: 0px; padding-bottom: 0px;"
-	});
-	var titleText = new ContentPane({
 		style: {
-			width: "49%"//,
-			//"float": "right"
+			backgroundColor: "#686868",
+			border: "0px",
+			marginBottom: "25px",
+			marginTop: "15px",
+			color: "white",
+			height: "60px"
 		}
 	});
-	titlePane.addChild(titleText);
-	var loginPane = new ContentPane({
+	
+	var titleSplit = new BorderContainer({
 		style: {
-			width: "49%"
+			backgroundColor: "inherit",
+			border: "inherit"
+		}
+	});
+	
+	var titleText = new ContentPane({
+		region: "center",
+		content: "COMP 110",
+		style: {
+			backgroundColor: "inherit",
+			border: "inherit",
+			marginTop: "auto",
+			marginBottom: "auto",
+			fontFamily: "sans-serif",
+			fontWeight: "bold",
+			fontSize: "25px"
+		}
+	});
+	var loginPane = new ContentPane({
+		region: "right",
+		style: {
+			backgroundColor: "inherit",
+			border: "inherit"
 		}
 	});
 	var login = new Login({
-		style: {
-			"float": "right"
-		}
+
 	});
-	loginPane.addChild(login);
-	titlePane.addChild(loginPane);
 	
+	titleSplit.addChild(titleText);
+	loginPane.addChild(login);
+	titleSplit.addChild(loginPane);
+	titlePane.addChild(titleSplit);
 	content.addChild(titlePane);
 	
 	var tc = new TabContainer({
@@ -151,10 +173,7 @@ require([
 	});
 	submitPane.addChild(submitButton);
 	
-	console.log("adding tc");
 	content.addChild(tc);
-	console.log("tc added");
-	
     content.startup();
 	
 });
