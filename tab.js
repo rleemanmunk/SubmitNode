@@ -67,15 +67,14 @@ require([
 		region: "left"
 	});
 	var assignmentPane = new ContentPane({
-		title: "Assignments",
-		content: "stuff"
+		title: "Assignments"
 	});
 	var assignmentTree = new Tree({
 		model: new ObjectStoreModel({
 			store: new JsonRest({
 				target: "/assignments/",
 				getChildren: function (object) {
-					return object.children || null;
+					return object.children || [];
 				}
 			}),
 			getRoot: function (onItem, onError) {
@@ -86,6 +85,7 @@ require([
 			}
 		})
 	});
+	assignmentPane.addChild(assignmentTree);
 	testLeftPane.addChild(assignmentPane);
 	var filePane = new ContentPane({
 		title: "Your Files"
@@ -95,7 +95,7 @@ require([
 			store: new JsonRest({
 				target: "/rest/",
 				getChildren: function(object) {
-					return object.children || null;
+					return object.children || [];
 				}
 			}),
 		   getRoot: function(onItem, onError) {

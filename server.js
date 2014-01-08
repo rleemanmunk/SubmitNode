@@ -31,9 +31,10 @@ var server = http.createServer(function (req,res) {
 		case "load":
 			break;
 		case "assignments":
+			console.log(full);
 			res.writeHead(200, {"Content-Type":"application/json"});
 			var data = {
-				label: "Assignments"
+				name: "Assignments"
 			}
 			res.write(JSON.stringify(data));
 			res.end();
