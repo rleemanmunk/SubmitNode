@@ -10,8 +10,7 @@ define([
 		buildRendering: function () {
 			this.domNode = domConstruct.create("div", {
 				style: {
-					maxHeight: "50px",
-					padding: "10px",
+					paddingLeft: "10px",
 					backgroundColor: "#686868"
 				}
 			});
@@ -30,6 +29,7 @@ define([
 			}, this.domNode);
 		},
 		postCreate: function () {
+			alert(this.resize);
 			var topStyle = domStyle.get(this.domNode);
 			var titleStyle = domStyle.get(this.titleNode);
 
@@ -40,11 +40,19 @@ define([
 		},
 		addChild: function () {
 			this.inherited(arguments);
-			var cstyle = domStyle.get(this.getChildren()[0].domNode);
-			var tstyle = domStyle.get(this.domNode);
-			domStyle.set(this.containerNode, "height", cstyle.height);
-			domStyle.set(this.containerNode, "margin-top", "auto");
-			domStyle.set(this.containerNode, "margin-bottom", "auto");
 		}
+		/*,
+		resize: function () {
+			this.inherited(arguments);
+			var cstyle = domStyle.get(this.getChildren()[0].domNode);
+			domStyle.set(this.containerNode, "height", cstyle.height);
+			domStyle.set(this.domNode, "height", cstyle.height);
+			domStyle.set(this.titleNode, {
+				height: "auto",
+				lineHeight: cstyle.height,
+				verticalAlign: "middle"
+			});
+		}
+		*/
 	});
 });
