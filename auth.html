@@ -1,0 +1,18 @@
+<html>
+	<head>
+		<title>Onyen Authentication Test</title>
+		<script src="dojo/dojo.js"></script>
+		<link rel="stylesheet" href="dijit/themes/claro/claro.css" />
+		<script>
+require([
+	"widgets/Login",
+	"dojo/domReady!"
+], function (Login) {
+	var l = new Login({}, "loginbutton");
+});
+		</script>
+	</head>
+	<body class="claro">
+		<div id="loginbutton"></div>
+	</body>
+</html>

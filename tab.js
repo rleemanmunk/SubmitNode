@@ -4,6 +4,7 @@ require([
     "dijit/layout/TabContainer",
 	"dijit/layout/AccordionContainer",
     "dijit/layout/ContentPane",
+	"widgets/Login",
     "widgets/CMWidget",
 	"dijit/form/Button",
 	"dojo/store/JsonRest",
@@ -12,7 +13,7 @@ require([
     "dojo/domReady!"
 ], function(domConstruct,
 	BorderContainer, TabContainer, AccordionContainer, ContentPane,
-	CMWidget, Button, 
+	Login, CMWidget, Button, 
 	JsonRest, ObjectStoreModel, Tree){
 	var content = new BorderContainer({
 		style: {
@@ -26,13 +27,54 @@ require([
 	//=====================================
 	//================TITLE================
 	//=====================================
-	var title = new ContentPane({
+	var titlePane = new ContentPane({
 		region: "top",
-		content: "<h2>COMP 110</h2>",
-		style: "background-color: #686868; border: 0px; margin-bottom: 25px; margin-top: 15px; color: white; line-height: 50%; padding-top: 0px; padding-bottom: 0px;"
+		style: {
+			backgroundColor: "#686868",
+			border: "0px",
+			marginBottom: "25px",
+			marginTop: "15px",
+			color: "white",
+			minHeight: "60px"
+		}
 	});
 	
-	content.addChild(title);
+	var titleSplit = new BorderContainer({
+		style: {
+			backgroundColor: "inherit",
+			border: "inherit"
+		}
+	});
+	
+	var titleText = new ContentPane({
+		region: "center",
+		content: "COMP 110",
+		style: {
+			backgroundColor: "inherit",
+			border: "inherit",
+			marginTop: "auto",
+			marginBottom: "auto",
+			fontFamily: "sans-serif",
+			fontWeight: "bold",
+			fontSize: "25px"
+		}
+	});
+	var loginPane = new ContentPane({
+		region: "right",
+		style: {
+			backgroundColor: "inherit",
+			border: "inherit"
+		}
+	});
+	var login = new Login({
+
+	});
+	
+	titleSplit.addChild(titleText);
+	loginPane.addChild(login);
+	titleSplit.addChild(loginPane);
+	titlePane.addChild(titleSplit);
+	content.addChild(titlePane);
 	
 	var tc = new TabContainer({
 		region: "center",
@@ -43,7 +85,7 @@ require([
 	//==============TEST PANE==============
 	//=====================================
     var testPane = new ContentPane({
-         title: "Test",
+         title: "In Class",
 		// TODO move to center container
 		 style: "padding: 20px;",
     });
@@ -147,14 +189,14 @@ require([
 	testPane.addChild(testPaneOrganizer);
     tc.addChild(testPane);
 
-	//=====================================
-	//============SUBMIT PANE==============
-	//=====================================
-    var submitPane = new ContentPane({
-         title: "Submit",
+	//=======================================
+	//============HOMEWORK PANE==============
+	//=======================================
+    var homeworkPane = new ContentPane({
+         title: "Homework",
 		 style: "padding: 20px;"
     });
-    tc.addChild(submitPane);
+    tc.addChild(homeworkPane);
 	
 	var upload = domConstruct.create("div", {innerHTML:
 		"<input type=\"file\">"
@@ -163,7 +205,7 @@ require([
          title: null,
 		 content: upload
     });
-	submitPane.addChild(uppane);
+	homeworkPane.addChild(uppane);
 	
 	var submitButton = new Button({
         label: "Submit",
@@ -171,10 +213,27 @@ require([
 			alert("TODO: submission function");
         }
 	});
-	submitPane.addChild(submitButton);
+	homeworkPane.addChild(submitButton);
+	
+	//=====================================
+	//============GRADES PANE==============
+	//=====================================
+    var gradesPane = new ContentPane({
+         title: "Grades",
+		 style: "padding: 20px;"
+    });
+    tc.addChild(gradesPane);
+	
+	//================================================
+	//============FOLDER MANAGEMENT PANE==============
+	//================================================
+    var fmPane = new ContentPane({
+         title: "Folder Management",
+		 style: "padding: 20px;"
+    });
+    tc.addChild(fmPane);
 	
 	content.addChild(tc);
-	
     content.startup();
 	
 });
