@@ -29,7 +29,7 @@ require([
 			marginBottom: "25px",
 			marginTop: "15px",
 			color: "white",
-			height: "60px"
+			minHeight: "60px"
 		}
 	});
 	
@@ -79,7 +79,7 @@ require([
 	//==============TEST PANE==============
 	//=====================================
     var testPane = new ContentPane({
-         title: "Test",
+         title: "In Class",
 		// TODO move to center container
 		 style: "padding: 20px;",
     });
@@ -147,14 +147,14 @@ require([
 	testPane.addChild(testPaneOrganizer);
     tc.addChild(testPane);
 
-	//=====================================
-	//============SUBMIT PANE==============
-	//=====================================
-    var submitPane = new ContentPane({
-         title: "Submit",
+	//=======================================
+	//============HOMEWORK PANE==============
+	//=======================================
+    var homeworkPane = new ContentPane({
+         title: "Homework",
 		 style: "padding: 20px;"
     });
-    tc.addChild(submitPane);
+    tc.addChild(homeworkPane);
 	
 	var upload = domConstruct.create("div", {innerHTML:
 		"<input type=\"file\">"
@@ -163,7 +163,7 @@ require([
          title: null,
 		 content: upload
     });
-	submitPane.addChild(uppane);
+	homeworkPane.addChild(uppane);
 	
 	var submitButton = new Button({
         label: "Submit",
@@ -171,7 +171,25 @@ require([
 			alert("TODO: submission function");
         }
 	});
-	submitPane.addChild(submitButton);
+	homeworkPane.addChild(submitButton);
+	
+	//=====================================
+	//============GRADES PANE==============
+	//=====================================
+    var gradesPane = new ContentPane({
+         title: "Grades",
+		 style: "padding: 20px;"
+    });
+    tc.addChild(gradesPane);
+	
+	//================================================
+	//============FOLDER MANAGEMENT PANE==============
+	//================================================
+    var fmPane = new ContentPane({
+         title: "Folder Management",
+		 style: "padding: 20px;"
+    });
+    tc.addChild(fmPane);
 	
 	content.addChild(tc);
     content.startup();
