@@ -30,7 +30,7 @@ require([
 			color: "white",
 			marginBottom: "10px",
 			marginTop: "5px",
-			font: "sans-serif"
+			fontFamily: "sans-serif"
 		}
 	});
 	content.addChild(title);

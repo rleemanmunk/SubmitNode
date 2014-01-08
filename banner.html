@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>Banner Test</title>
+		<link rel="stylesheet" href="dijit/themes/claro/claro.css" />
+		<script src="dojo/dojo.js"></script>
+		<script>
+require([
+	"widgets/Banner",
+	"widgets/Login",
+	"dojo/domReady!"
+], function (Banner, Login) {
+	var b = new Banner({
+	}, "banner");
+	var l = new Login({
+	});
+	b.addChild(l);
+});
+		</script>
+	</head>
+	<body class="claro">
+		<div id="banner"></div>
+	</body>
+</html>
