@@ -5,12 +5,13 @@ require([
     "dijit/layout/ContentPane",
 	"widgets/Login",
     "widgets/CMWidget",
+	"widgets/Banner",
 	"dijit/form/Button",
 	"dojo/store/JsonRest",
 	"dijit/tree/ObjectStoreModel",
 	"dijit/Tree",
     "dojo/domReady!"
-], function(domConstruct, BorderContainer, TabContainer, ContentPane, Login, CMWidget, Button, 
+], function(domConstruct, BorderContainer, TabContainer, ContentPane, Login, CMWidget, Banner, Button, 
 	JsonRest, ObjectStoreModel, Tree){
 	var content = new BorderContainer({
 		style: {
@@ -21,6 +22,7 @@ require([
 			marginRight: "auto"
 		}
 	}, "tc1-prog");
+	/*
 	var title = new ContentPane({
 		region: "top",
 		content: "COMP 110",
@@ -34,6 +36,15 @@ require([
 		}
 	});
 	content.addChild(title);
+	*/
+	var banner = new Banner({
+		region: "top",
+		title: "COMP 110"
+	});
+	var login = new Login({
+	});
+	banner.addChild(login);
+	content.addChild(banner);
 	
 	var tc = new TabContainer({
 		region: "center",
