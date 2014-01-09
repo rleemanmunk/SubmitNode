@@ -41,9 +41,6 @@ require([
 		region: "top",
 		title: "COMP 110"
 	});
-	var login = new Login({
-	});
-	banner.addChild(login);
 	content.addChild(banner);
 	
 	var tc = new TabContainer({

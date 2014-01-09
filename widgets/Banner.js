@@ -2,11 +2,37 @@ define([
 	"dojo/_base/declare",
 	"dojo/dom-construct",
 	"dojo/dom-style",
+	"./Login",
+	"dijit/layout/ContentPane",
+	"dijit/layout/BorderContainer",
 	"dijit/_WidgetBase",
 	"dijit/_Container"
-], function (declare, domConstruct, domStyle, _WidgetBase, _Container) {
+], function (declare, domConstruct, domStyle, Login, ContentPane, BorderContainer, _WidgetBase, _Container) {
 	return declare([_WidgetBase, _Container],{
 		title: "default title",
+		buildRendering: function () {
+			this.domNode = domConstruct.create("div");
+			var content = new ContentPane({
+			}).placeAt(this.domNode);
+			var bc = new BorderContainer({
+				style: "height: 40px;"
+			});
+			var title = new ContentPane({
+				region: "center",
+				content: this.title
+			});
+			bc.addChild(title);
+			var login = new Login({
+				region: "right"
+			});
+			bc.addChild(login);
+			bc.startup();
+			content.addChild(bc);
+			//content.startup();
+		},
+		postCreate: function () {
+		}
+	/*
 		buildRendering: function () {
 			this.domNode = domConstruct.create("div", {
 				style: {
@@ -41,6 +67,7 @@ define([
 		addChild: function () {
 			this.inherited(arguments);
 		}
+		*/
 		/*,
 		resize: function () {
 			this.inherited(arguments);
