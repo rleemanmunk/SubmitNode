@@ -53,16 +53,14 @@ define([
 					fontSize: "20px"
 				}
 			}, this.domNode);
-		},
-		postCreate: function () {
-			alert(this.resize);
-			var topStyle = domStyle.get(this.domNode);
-			var titleStyle = domStyle.get(this.titleNode);
-
-			var tsWidth = Number(topStyle.width.split("px")[0]);
-			domStyle.set(this.titleNode, "width", tsWidth * .5);
+		},postCreate: function () {
+			 var topStyle = domStyle.get(this.domNode);
+			 var titleStyle = domStyle.get(this.titleNode);
+			 var tsWidth = Number(topStyle.width.split("px")[0]);
+			 domStyle.set(this.titleNode, "width", tsWidth * .5);
 
 			domStyle.set(this.containerNode, "height", titleStyle.height);
+
 		},
 		addChild: function () {
 			this.inherited(arguments);
