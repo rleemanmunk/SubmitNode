@@ -1,6 +1,7 @@
 var http = require("http");
 var url = require("url");
 var fs = require("fs");
+var mongo = require("mongo");
 
 var port = 3131;
 
@@ -34,8 +35,20 @@ var server = http.createServer(function (req,res) {
 			console.log(full);
 			res.writeHead(200, {"Content-Type":"application/json"});
 			var data = {
-				name: "Assignments"
-			}
+				name: "Assignments",
+				id: "root"
+			};
+			mongo.MongoClient.connect('mongodb://localhost:27107/comp110', function (err, db) {
+				var coll = db.collection('assignments');
+				collection.find({type:1}).each(function(err,doc) {
+					if (doc == null) {
+						db.close();
+					} else {
+						collection.find({folder: doc.name}).each(function(err, doc) {
+						});
+					}
+				});
+			});
 			res.write(JSON.stringify(data));
 			res.end();
 			break;
