@@ -3,6 +3,7 @@ var https = require("https");
 var url = require("url");
 var fs = require("fs");
 var qs = require("querystring");
+var MongoClient = require("mongodb").MongoClient;
 
 var port = 3131;
 
@@ -58,6 +59,23 @@ var server = http.createServer(function (req,res) {
 
 	switch (cmd[1]) {
 		case "icsubmit":
+			postCallbacks.add(function (data) {
+				console.log(decodeURI(data.code));
+				res.writeHead(200, {"Content-Type":"text/plain"});
+				res.write("got it!");
+				res.end();
+				MongoClient.connect("mongodb://localhost:27017/comp110", function (err, db) {
+					if (err) throw err;
+					db.collection("inclass").insert({
+						user: data.user,
+						problem: data.problem || "none",
+						code: decodeURI(data.code)
+					}, function (err, docs) {
+						if (err) throw err;
+						db.close();
+					});
+				});
+			});
 			break;
 		case "hwsubmit":
 			break;

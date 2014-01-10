@@ -1,5 +1,6 @@
 require([
     "dojo/dom-construct",
+	"dojo/request/xhr",
 	"dijit/layout/BorderContainer",
     "dijit/layout/TabContainer",
 	"dijit/layout/AccordionContainer",
@@ -7,13 +8,14 @@ require([
 	"widgets/Login",
     "widgets/CMWidget",
 	"dijit/form/Button",
+	"dijit/Dialog",
 	"dojo/store/JsonRest",
 	"dijit/tree/ObjectStoreModel",
 	"dijit/Tree",
     "dojo/domReady!"
-], function(domConstruct,
+], function(domConstruct, xhr,
 	BorderContainer, TabContainer, AccordionContainer, ContentPane,
-	Login, CMWidget, Button, 
+	Login, CMWidget, Button, Dialog,
 	JsonRest, ObjectStoreModel, Tree){
 	var content = new BorderContainer({
 		style: {
@@ -178,10 +180,52 @@ require([
         }
 	});
 	testPaneControls.addChild(runButton);
+	var submitConfirm = new Dialog({
+		title: "Confirm Submission",
+		//content: "Are you sure you want to submit your assignment?\nPlease make sure you have tested your code.",
+		style: {
+			width: "400px"
+		}
+	});
+	submitConfirm.addChild(submitConfirm.text = new ContentPane({
+		content: "Are you sure you want to submit your assignment?\nPlease make sure you have tested your code.",
+	}));
+	submitConfirm.addChild(new Button({
+		label: "Ok",
+		onClick: function () {
+			xhr.post("/icsubmit",{
+				data: {
+					code: encodeURI(cm.getContent()),
+					// TODO send problem _id from tree node
+					problem: null,
+					user: "klieth"
+				}
+			}).then(
+				function (data) {
+					console.log(data);
+					submitConfirm.hide();
+				}, function (err) {
+					console.log(err);
+					alert("An error occurred while trying to submit your response:\n" + err);
+					submitConfirm.hide();
+				}
+			);
+		}
+	}));
+	submitConfirm.addChild(new Button({
+		label: "Cancel",
+		onClick: function () {
+			submitConfirm.hide();
+		}
+	}));
 	var submitButton = new Button({
 		label: "Submit",
 		onClick: function() {
-			alert("TODO: submit to server");
+			// TODO grab current assignment name
+			// 		ONLY if I can figure out content
+			// 		Add content pane to dialog?
+			submitConfirm.text.set('content','You are submitting assignment "' + "Class name" + '"\nPlease make sure you have tested your code before submitting.');
+			submitConfirm.show();
 		}
 	});
 	testPaneControls.addChild(submitButton);
