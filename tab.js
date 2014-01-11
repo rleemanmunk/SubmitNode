@@ -73,8 +73,20 @@ require([
 		model: new ObjectStoreModel({
 			store: new JsonRest({
 				target: "/assignments/",
-				getChildren: function (object) {
-					return object.children || [];
+				getChildren: function (object, onComplete, onError) {
+					this.get(object.id).then(
+						function (item) {
+							object = item;
+							alert(object.children);
+							alert(onComplete);
+							onComplete(object.children);
+						},
+						function (err) {
+							console.log(err);
+							onError(err);
+						}
+					);
+					//return object.children || [];
 				}
 			}),
 			getRoot: function (onItem, onError) {
