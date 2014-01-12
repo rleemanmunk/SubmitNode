@@ -92,16 +92,15 @@ require([
 	var testPaneOrganizer = new BorderContainer({
 		design: "sidebar"
 	});
-	var editorTitle = new ContentPane({
-		content: "Code",
+	var assignmentText = new ContentPane({
+		content: "Double click one of the assignments in the left pane to get the assignment description",
 		style: {
 			fontFamily: "sans-serif",
-			fontWeight: "bold",
-			fontSize: "20px"
+			height: "50px"
 		},
 		region: "top"
 	});
-	testPaneOrganizer.addChild(editorTitle);
+	testPaneOrganizer.addChild(assignmentText);
 	var testLeftPane = new AccordionContainer({
 		style: {
 			width: "200px"
@@ -114,18 +113,32 @@ require([
 	var assignmentTree = new Tree({
 		model: new ObjectStoreModel({
 			store: new JsonRest({
-				target: "/assignments/",
-				getChildren: function (object) {
-					return object.children || [];
-				}
+				target: "/assignments/"
 			}),
+			getChildren: function (object, onComplete, onError) {
+				this.store.get(object.id).then(
+					function (item) {
+						object.children = item.children;
+						onComplete(item.children);
+					}, function (err) {
+						onError(err);
+					}
+				);
+			},
 			getRoot: function (onItem, onError) {
 				this.store.get("root").then(onItem,onError);
 			},
 			mayHaveChildren: function (object) {
 				return "children" in object;
 			}
-		})
+		}),
+		onDblClick: function (item, node, evt) {
+			if ("children" in item) {
+				alert("not a leaf node");
+				return;
+			}
+			assignmentText.set('content',item.text);
+		}
 	});
 	assignmentPane.addChild(assignmentTree);
 	testLeftPane.addChild(assignmentPane);

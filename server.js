@@ -3,6 +3,8 @@ var https = require("https");
 var url = require("url");
 var fs = require("fs");
 var qs = require("querystring");
+var MongoClient = require("mongodb").MongoClient;
+var ObjectID = require("mongodb").ObjectID;
 
 var port = 3131;
 
@@ -67,12 +69,49 @@ var server = http.createServer(function (req,res) {
 			break;
 		case "assignments":
 			console.log(full);
-			res.writeHead(200, {"Content-Type":"application/json"});
-			var data = {
-				name: "Assignments"
+			var id = cmd[2] || null;
+			console.log(id || "no id specified");
+			if (id == null || id == "root") {
+				MongoClient.connect('mongodb://localhost:27017/comp110', function (err, db) {
+					if (err) throw err;
+					var coll = db.collection('assignments');
+					coll.find({type:1}).toArray(function (err, folders) {
+						folders.forEach(function (doc) {
+							doc.id = doc._id;
+							doc.children = true;
+						});
+						res.writeHead(200, {"Content-Type":"application/json"});
+						var data = {
+							name: "Assignments",
+							id: "root",
+							children: folders
+						};
+						console.log("sending: " + JSON.stringify(data));
+						res.write(JSON.stringify(data));
+						res.end();
+						db.close();
+					});
+				});
+			} else {
+				MongoClient.connect('mongodb://localhost:27017/comp110', function (err, db) {
+					if (err) throw err;
+					var coll = db.collection('assignments');
+					coll.find({_id: new ObjectID(id)}).toArray(function (err, folder) {
+						if (err) throw err;
+						var data = folder[0];
+						if (folder.length > 0) {
+							coll.find({folder:data.name}).toArray(function (err, files) {
+								res.writeHead(200, {"Content-Type":"application/json"});
+								console.dir(files);
+								data.children = files;
+								res.write(JSON.stringify(data));
+								res.end();
+								db.close();
+							});
+						}
+					});
+				});
 			}
-			res.write(JSON.stringify(data));
-			res.end();
 			break;
 		case "rest":
 			console.log(full);
