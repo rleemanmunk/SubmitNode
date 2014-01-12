@@ -72,23 +72,18 @@ require([
 	var assignmentTree = new Tree({
 		model: new ObjectStoreModel({
 			store: new JsonRest({
-				target: "/assignments/",
-				getChildren: function (object, onComplete, onError) {
-					this.get(object.id).then(
-						function (item) {
-							object = item;
-							alert(object.children);
-							alert(onComplete);
-							onComplete(object.children);
-						},
-						function (err) {
-							console.log(err);
-							onError(err);
-						}
-					);
-					//return object.children || [];
-				}
+				target: "/assignments/"
 			}),
+			getChildren: function (object, onComplete, onError) {
+				this.store.get(object.id).then(
+					function (item) {
+						object.children = item.children;
+						onComplete(item.children);
+					}, function (err) {
+						onError(err);
+					}
+				);
+			},
 			getRoot: function (onItem, onError) {
 				this.store.get("root").then(onItem,onError);
 			},
