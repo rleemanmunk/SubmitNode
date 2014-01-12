@@ -50,16 +50,15 @@ require([
 	var testPaneOrganizer = new BorderContainer({
 		design: "sidebar"
 	});
-	var editorTitle = new ContentPane({
-		content: "Code",
+	var assignmentText = new ContentPane({
+		content: "Double click one of the assignments in the left pane to get the assignment description",
 		style: {
 			fontFamily: "sans-serif",
-			fontWeight: "bold",
-			fontSize: "20px"
+			height: "50px"
 		},
 		region: "top"
 	});
-	testPaneOrganizer.addChild(editorTitle);
+	testPaneOrganizer.addChild(assignmentText);
 	var testLeftPane = new AccordionContainer({
 		style: {
 			width: "200px"
@@ -90,7 +89,14 @@ require([
 			mayHaveChildren: function (object) {
 				return "children" in object;
 			}
-		})
+		}),
+		onDblClick: function (item, node, evt) {
+			if ("children" in item) {
+				alert("not a leaf node");
+				return;
+			}
+			assignmentText.set('content',item.text);
+		}
 	});
 	assignmentPane.addChild(assignmentTree);
 	testLeftPane.addChild(assignmentPane);
