@@ -3,7 +3,7 @@ var https = require("https");
 var url = require("url");
 var fs = require("fs");
 var qs = require("querystring");
-var Sandbox = require("sandbox/sandbox");
+var Sandbox = require("./sandbox/sandbox");
 var MongoClient = require("mongodb").MongoClient;
 var ObjectID = require("mongodb").ObjectID;
 

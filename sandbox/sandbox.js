@@ -1,6 +1,7 @@
 
 
 var cp = require('child_process');
+var path = require('path');
 
 function Sandbox (options) {
 	this.options = options || {
@@ -9,7 +10,7 @@ function Sandbox (options) {
 
 	var timer = null;
 	var cb = null;
-	var child = cp.fork('./shovel.js');
+	var child = cp.fork(path.join(__dirname,'shovel.js'));
 
 	child.on('message', function (m) {
 		console.log(m);

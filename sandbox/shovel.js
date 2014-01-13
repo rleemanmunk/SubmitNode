@@ -8,7 +8,7 @@ var output = [];
 function getSafeRunner() {
 	var global = this;
 	function UserScript(str) {
-		return Function('eval("' + str + '")');
+		return Function('eval(' + JSON.stringify(str + '') + ')');
 	}
 	return function run (src) {
 		global.alert = function (str) {
