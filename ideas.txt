@@ -1,4 +1,14 @@
 
+Tasks:
+
+status area/alert with submission status
+login/enter onyen
+
+grading tab
+
+
+
+
 Folders:
 username (saved files)
 templates (shared from teacher) (maybe "assignments")
