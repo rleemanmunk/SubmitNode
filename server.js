@@ -62,14 +62,30 @@ var server = http.createServer(function (req,res) {
 	switch (cmd[1]) {
 		case "icsubmit":
 			postCallbacks.add(function (data) {
+				var code = decodeURI(data.code);
 				var assignment = {
 					correct: false,
+					output: "",
 					msg: ""
 				};
 				var s = new Sandbox();
-				res.writeHead(200, {"Content-Type":"application/json"});
-				res.write(JSON.stringify(data));
-				res.end();
+				s.run(code, function (output) {
+					assignment.output = output;
+					res.writeHead(200, {"Content-Type":"application/json"});
+					res.write(JSON.stringify(assignment));
+					res.end();
+				});
+				MongoClient.connect("mongodb://localhost:27017/comp110", function (err, db) {
+					if (err) throw err;
+					db.collection("inclass").insert({
+						user: data.user,
+						problem: data.problem || "none",
+						code: decodeURI(data.code)
+					}, function (err, docs) {
+						if (err) throw err;
+						db.close();
+					});
+				});
 			});
 			break;
 		case "hwsubmit":
