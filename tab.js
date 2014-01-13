@@ -1,3 +1,6 @@
+
+// TODO infinite loops in run option!!!
+
 require([
     "dojo/dom-construct",
 	"dojo/request/xhr",
@@ -96,6 +99,7 @@ require([
 	});
 	var assignmentText = new ContentPane({
 		content: "Double click one of the assignments in the left pane to get the assignment description",
+		assignmentName: "none",
 		style: {
 			fontFamily: "sans-serif",
 			height: "50px"
@@ -139,6 +143,7 @@ require([
 				alert("not a leaf node");
 				return;
 			}
+			assignmentText.assignmentName = item.name;
 			assignmentText.set('content',item.text);
 		}
 	});
@@ -210,7 +215,7 @@ require([
 				data: {
 					code: encodeURI(cm.getContent()),
 					// TODO send problem _id from tree node
-					problem: null,
+					problem: assignmentText.assignmentName,
 					user: "klieth"
 				}
 			}).then(

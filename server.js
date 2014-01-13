@@ -63,27 +63,32 @@ var server = http.createServer(function (req,res) {
 		case "icsubmit":
 			postCallbacks.add(function (data) {
 				var code = decodeURI(data.code);
-				var assignment = {
-					correct: false,
-					output: "",
-					msg: ""
-				};
-				var s = new Sandbox();
-				s.run(code, function (output) {
-					assignment.output = output;
-					res.writeHead(200, {"Content-Type":"application/json"});
-					res.write(JSON.stringify(assignment));
-					res.end();
-				});
 				MongoClient.connect("mongodb://localhost:27017/comp110", function (err, db) {
-					if (err) throw err;
-					db.collection("inclass").insert({
-						user: data.user,
-						problem: data.problem || "none",
-						code: decodeURI(data.code)
-					}, function (err, docs) {
-						if (err) throw err;
-						db.close();
+					db.collection("solutions").find({name:data.problem}).toArray(function (err, solution) {
+						var assignment = {
+							correct: false,
+							output: "",
+							msg: ""
+						};
+						var s = new Sandbox();
+						s.run(code, function (output) {
+							assignment.output = output;
+							if (output == solution[0].output) {
+								assignment.correct = true;
+							}
+							db.collection("inclass").insert({
+								user: data.user,
+								problem: data.problem || "not set",
+								code: decodeURI(data.code),
+								points: assignment.correct ? 1 : 0
+							}, function (err, docs) {
+								if (err) throw err;
+								db.close();
+							});
+							res.writeHead(200, {"Content-Type":"application/json"});
+							res.write(JSON.stringify(assignment));
+							res.end();
+						});
 					});
 				});
 			});
