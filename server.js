@@ -3,6 +3,7 @@ var https = require("https");
 var url = require("url");
 var fs = require("fs");
 var qs = require("querystring");
+var Sandbox = require("sandbox/sandbox");
 var MongoClient = require("mongodb").MongoClient;
 var ObjectID = require("mongodb").ObjectID;
 
@@ -60,6 +61,16 @@ var server = http.createServer(function (req,res) {
 
 	switch (cmd[1]) {
 		case "icsubmit":
+			postCallbacks.add(function (data) {
+				var assignment = {
+					correct: false,
+					msg: ""
+				};
+				var s = new Sandbox();
+				res.writeHead(200, {"Content-Type":"application/json"});
+				res.write(JSON.stringify(data));
+				res.end();
+			});
 			break;
 		case "hwsubmit":
 			break;
